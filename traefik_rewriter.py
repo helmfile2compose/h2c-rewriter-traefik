@@ -27,14 +27,14 @@ class TraefikRewriter(IngressRewriter):
         cls = get_ingress_class(manifest, ingress_types)
         if cls == "traefik":
             return True
-        annotations = manifest.get("metadata", {}).get("annotations", {})
+        annotations = manifest.get("metadata", {}).get("annotations") or {}
         return any(k.startswith("traefik.ingress.kubernetes.io/")
                    for k in annotations)
 
     def rewrite(self, manifest, ctx):
         entries = []
-        annotations = manifest.get("metadata", {}).get("annotations", {})
-        spec = manifest.get("spec", {})
+        annotations = manifest.get("metadata", {}).get("annotations") or {}
+        spec = manifest.get("spec") or {}
 
         # Traefik router.tls annotation → backend SSL
         # Note: this is about the upstream connection to the backend,
@@ -42,7 +42,7 @@ class TraefikRewriter(IngressRewriter):
         backend_ssl = annotations.get(
             "traefik.ingress.kubernetes.io/router.tls", "").lower() == "true"
 
-        for rule in spec.get("rules", []):
+        for rule in spec.get("rules") or []:
             host = rule.get("host", "")
             if not host:
                 continue
