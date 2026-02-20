@@ -5,7 +5,7 @@ Traefik middleware CRDs (IngressRoute, Middleware) are NOT supported —
 those would need a full converter, not a rewriter.
 """
 
-from helmfile2compose import IngressRewriter, get_ingress_class, resolve_backend
+from h2c import IngressRewriter, get_ingress_class, resolve_backend
 
 
 class TraefikRewriter(IngressRewriter):
