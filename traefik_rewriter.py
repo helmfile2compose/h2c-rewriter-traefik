@@ -23,7 +23,7 @@ class TraefikRewriter(IngressRewriter):
     name = "traefik"
 
     def match(self, manifest, ctx):
-        ingress_types = ctx.config.get("ingressTypes", {})
+        ingress_types = ctx.config.get("ingress_types") or {}
         cls = get_ingress_class(manifest, ingress_types)
         if cls == "traefik":
             return True
