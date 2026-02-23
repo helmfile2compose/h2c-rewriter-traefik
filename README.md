@@ -47,6 +47,21 @@ Or manually:
 cp traefik_rewriter.py /path/to/extensions-dir/
 ```
 
+## Code quality
+
+*Last updated: 2026-02-23*
+
+| Metric | Value |
+|--------|-------|
+| Pylint | 10.00/10 |
+| Pyflakes | clean |
+| Radon MI | 77.56 (A) |
+| Radon avg CC | 10.0 (B) |
+
+Worst CC: `TraefikRewriter.rewrite` (14, C).
+
+The `E0401: Unable to import 'h2c'` is expected — extensions import from h2c-core at runtime, not at lint time.
+
 ## Dependencies
 
 None (stdlib only).

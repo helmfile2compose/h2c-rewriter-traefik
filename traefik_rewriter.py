@@ -5,7 +5,7 @@ Traefik middleware CRDs (IngressRoute, Middleware) are NOT supported —
 those would need a full converter, not a rewriter.
 """
 
-from h2c import IngressRewriter, get_ingress_class, resolve_backend
+from h2c import IngressRewriter, get_ingress_class, resolve_backend  # pylint: disable=import-error  # h2c resolves at runtime
 
 
 class TraefikRewriter(IngressRewriter):
@@ -23,6 +23,7 @@ class TraefikRewriter(IngressRewriter):
     name = "traefik"
 
     def match(self, manifest, ctx):
+        """Return True if manifest uses traefik ingress class or annotations."""
         ingress_types = ctx.config.get("ingress_types") or {}
         cls = get_ingress_class(manifest, ingress_types)
         if cls == "traefik":
@@ -32,6 +33,7 @@ class TraefikRewriter(IngressRewriter):
                    for k in annotations)
 
     def rewrite(self, manifest, ctx):
+        """Rewrite Traefik ingress manifest to Caddy entries."""
         entries = []
         annotations = manifest.get("metadata", {}).get("annotations") or {}
         spec = manifest.get("spec") or {}
