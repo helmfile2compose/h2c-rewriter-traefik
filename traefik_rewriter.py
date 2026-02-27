@@ -5,7 +5,7 @@ Traefik middleware CRDs (IngressRoute, Middleware) are NOT supported —
 those would need a full converter, not a rewriter.
 """
 
-from h2c import IngressRewriter, get_ingress_class, resolve_backend  # pylint: disable=import-error  # h2c resolves at runtime
+from dekube import IngressRewriter, get_ingress_class, resolve_backend  # pylint: disable=import-error  # h2c resolves at runtime
 
 
 class TraefikRewriter(IngressRewriter):
