@@ -28,14 +28,14 @@ class TraefikRewriter(IngressRewriter):
         cls = get_ingress_class(manifest, ingress_types)
         if cls == "traefik":
             return True
-        annotations = manifest.get("metadata", {}).get("annotations") or {}
+        annotations = (manifest.get("metadata") or {}).get("annotations") or {}
         return any(k.startswith("traefik.ingress.kubernetes.io/")
                    for k in annotations)
 
     def rewrite(self, manifest, ctx):
         """Rewrite Traefik ingress manifest to Caddy entries."""
         entries = []
-        annotations = manifest.get("metadata", {}).get("annotations") or {}
+        annotations = (manifest.get("metadata") or {}).get("annotations") or {}
         spec = manifest.get("spec") or {}
 
         # Traefik router.tls annotation → backend SSL
