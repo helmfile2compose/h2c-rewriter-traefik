@@ -1,4 +1,4 @@
-"""h2c-rewriter-traefik — Traefik ingress annotation rewriter for helmfile2compose.
+"""dekube-rewriter-traefik — Traefik ingress annotation rewriter.
 
 POC: handles standard Ingress rules for traefik ingressClassName.
 Traefik middleware CRDs (IngressRoute, Middleware) are NOT supported —
