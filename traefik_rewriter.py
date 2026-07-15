@@ -45,10 +45,14 @@ class TraefikRewriter(IngressRewriter):
             "traefik.ingress.kubernetes.io/router.tls", "").lower() == "true"
 
         for rule in spec.get("rules") or []:
+            if not rule:
+                continue
             host = rule.get("host", "")
             if not host:
                 continue
             for path_entry in (rule.get("http") or {}).get("paths") or []:
+                if not path_entry:
+                    continue
                 path = path_entry.get("path", "/")
                 backend = resolve_backend(path_entry, manifest, ctx)
 
